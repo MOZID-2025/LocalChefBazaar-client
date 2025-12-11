@@ -10,6 +10,8 @@ import MealDetails from "../Pages/Meals/MealDetails";
 import PrivateRoute from "./PrivateRoute";
 import MealReviews from "../Pages/Meals/MealReviews";
 import OrderPage from "../Pages/OrderPage/OrderPage";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyOrder from "../Pages/Dashboard/MyOrder/MyOrder";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +83,20 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "myorder",
+        Component: MyOrder,
       },
     ],
   },
