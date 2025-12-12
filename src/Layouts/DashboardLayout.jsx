@@ -79,7 +79,7 @@ const DashboardLayout = () => {
                 data-tip="My Order"
               >
                 {/* Home icon */}
-                <FaBorderAll />
+                <FaBorderAll className="my-1.5 inline-block size-4" />
 
                 <span className="is-drawer-close:hidden">My Order</span>
               </Link>
