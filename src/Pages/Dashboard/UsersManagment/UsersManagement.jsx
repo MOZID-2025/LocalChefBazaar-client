@@ -39,6 +39,10 @@ const UsersManagement = () => {
       }
     });
   };
+
+  const handleRemoveAdmin = user =>{
+    
+  }
   return (
     <div>
       <h2>Users Management: {users.length}</h2>
@@ -59,36 +63,36 @@ const UsersManagement = () => {
           </thead>
 
           <tbody className="text-center">
-            {users.map((u, index) => (
-              <tr>
+            {users.map((user, index) => (
+              <tr key={user._id}>
                 <th>{index + 1}</th>
-                <td>{u.displayName}</td>
-                <td>{u.email}</td>
+                <td>{user.displayName}</td>
+                <td>{user.email}</td>
                 <td>
                   <img
-                    src={u.photoURL}
+                    src={user.photoURL}
                     alt="profile"
                     className="w-10 h-10 rounded-full mx-auto"
                   />
                 </td>
 
-                <td>{u.role || "user"}</td>
+                <td>{user.role || "user"}</td>
                 <td>
-                  {u.role === "admin" ? (
-                    <button className="btn">
+                  {user.role === "admin" ? (
+                    <button className="btn bg-red-300">
                       {" "}
                       <FiShieldOff />
                     </button>
                   ) : (
                     <button
-                      onClick={() => handleMakeAdmin(u)}
-                      className="btn btn-sm"
+                      onClick={() => handleMakeAdmin(user)}
+                      className="btn btn-sm bg-green-400"
                     >
                       <FaUserShield />
                     </button>
                   )}
                 </td>
-                <td>{u.status || "active"}</td>
+                <td>{user.status || "active"}</td>
 
                 <td>
                   <Link to="">
