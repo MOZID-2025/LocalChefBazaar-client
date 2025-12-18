@@ -21,6 +21,7 @@ import FavoriteMeal from "../Pages/Dashboard/FavouriteMeal/FavoriteMeal";
 import BeAChief from "../Pages/BeAChief.jsx/BeAChief";
 import ApprovedChief from "../Pages/Dashboard/ApprovedChief/ApprovedChief";
 import UsersManagement from "../Pages/Dashboard/UsersManagment/UsersManagement";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -140,11 +141,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "approve-chief",
-        Component: ApprovedChief,
+        element: (
+          <AdminRoute>
+            <ApprovedChief></ApprovedChief>
+          </AdminRoute>
+        ),
       },
       {
         path: "users-management",
-        Component: UsersManagement,
+        element: (
+          <AdminRoute>
+            <UsersManagement></UsersManagement>
+          </AdminRoute>
+        ),
       },
     ],
   },

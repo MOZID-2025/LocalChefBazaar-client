@@ -1,76 +1,89 @@
 import axios from "axios";
-
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router";
 
 const MyProfile = () => {
-  const { data: users = [], isLoading } = useQuery({
-    queryKey: ["users"],
+  const { user } = useAuth();
+
+  const { data: myProfile = {}, isLoading } = useQuery({
+    queryKey: ["myProfile", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/users");
+      const res = await axios.get(
+        `http://localhost:3000/users/profile?email=${user.email}`
+      );
       return res.data;
     },
   });
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h2>My Profile</h2>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          <thead>
-            <tr className="text-center">
-              <th>SL No.</th>
-              <th>User Name</th>
-              <th>User Email</th>
-              <th>User Image</th>
-              <th>User Address</th>
-              <th>User Role</th>
-              <th>User Status</th>
-              <th>Chef Id</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+    <div className="flex justify-center mt-10">
+      <div className="card w-96 bg-base-100 shadow-xl">
+        <figure className="pt-6">
+          <img
+            src={myProfile.photoURL}
+            alt="profile"
+            className="w-24 h-24 rounded-full border-4 border-primary"
+          />
+        </figure>
 
-          <tbody className="text-center">
-            {users.map((u, index) => (
-              <tr>
-                <th>{index + 1}</th>
-                <td>{u.displayName}</td>
-                <td>{u.email}</td>
-                <td>
-                  <img
-                    src={u.photoURL}
-                    alt="profile"
-                    className="w-10 h-10 rounded-full mx-auto"
-                  />
-                </td>
-                <td>{u.address || "N/A"}</td>
-                <td>{u.role || "user"}</td>
-                <td>{u.status || "active"}</td>
-                <td>{u.chefId || "-"}</td>
-                <td>
-                  <Link to="/chief">
-                    <button className="btn btn-primary mr-4 text-black btn-sm">
-                      Be a chief
-                    </button>
-                  </Link>
-                  <Link>
-                    <button className="btn btn-primary text-black btn-sm">
-                      Be an Admin
-                    </button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="card-body text-center">
+          <h2 className="text-xl font-bold">
+            {myProfile.displayName || "User Name"}
+          </h2>
+          <p className="text-sm text-gray-500">{myProfile.email}</p>
+
+          <div className="divider"></div>
+
+          <div className="space-y-2 text-sm">
+            <p>
+              <span className="font-semibold">📍 Address:</span>{" "}
+              {myProfile.address || "N/A"}
+            </p>
+            <p>
+              <span className="font-semibold ">🎭 Role:</span>{" "}
+              <span className="badge badge-primary text-black">
+                {myProfile.role || "user"}
+              </span>
+            </p>
+            <p>
+              <span className="font-semibold">⚡ Status:</span>{" "}
+              <span className="badge badge-success">
+                {myProfile.status || "active"}
+              </span>
+            </p>
+            <p>
+              <span className="font-semibold">👨‍🍳 Chef ID:</span>{" "}
+              {myProfile.chefId || "-"}
+            </p>
+          </div>
+
+          <div className="flex">
+            <Link className="">
+              <button className="btn btn-primary btn-sm text-black mr-4">
+                Edit Profile
+              </button>
+            </Link>
+            <Link to="/chief">
+              <button className="btn btn-primary mr-4 text-black btn-sm">
+                Be a chief
+              </button>
+            </Link>
+            <Link>
+              <button className="btn btn-primary text-black btn-sm">
+                Be an Admin
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default MyProfile;
+
+<td></td>;

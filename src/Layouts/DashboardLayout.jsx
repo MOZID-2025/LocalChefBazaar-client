@@ -5,8 +5,10 @@ import { CgProfile } from "react-icons/cg";
 import { MdReviews } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 import { GiCook } from "react-icons/gi";
+import useRoles from "../Hooks/useRoles";
 
 const DashboardLayout = () => {
+  const { role } = useRoles();
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -131,33 +133,41 @@ const DashboardLayout = () => {
               </Link>
             </li>
 
-            {/* approved chief*/}
-            <li>
-              <Link
-                to="/dashboard/approve-chief"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="approve-chief"
-              >
-                {/* profile icon */}
-                <GiCook className="my-1.5 inline-block size-4" />
+            {role === "admin" && (
+              <>
+                {/* approved chief*/}
+                <li>
+                  <Link
+                    to="/dashboard/approve-chief"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="approve-chief"
+                  >
+                    {/* profile icon */}
+                    <GiCook className="my-1.5 inline-block size-4" />
 
-                <span className="is-drawer-close:hidden">approve chief</span>
-              </Link>
-            </li>
+                    <span className="is-drawer-close:hidden">
+                      approve chief
+                    </span>
+                  </Link>
+                </li>
 
-            {/* approved chief*/}
-            <li>
-              <Link
-                to="/dashboard/users-management"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Users Management"
-              >
-                {/* profile icon */}
-                <FaUser className="my-1.5 inline-block size-4"></FaUser>
+                {/* approved chief*/}
+                <li>
+                  <Link
+                    to="/dashboard/users-management"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Users Management"
+                  >
+                    {/* profile icon */}
+                    <FaUser className="my-1.5 inline-block size-4"></FaUser>
 
-                <span className="is-drawer-close:hidden">Users Management</span>
-              </Link>
-            </li>
+                    <span className="is-drawer-close:hidden">
+                      Users Management
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {/* List item */}
             <li>
