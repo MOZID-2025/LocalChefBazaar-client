@@ -22,6 +22,7 @@ import BeAChief from "../Pages/BeAChief.jsx/BeAChief";
 import ApprovedChief from "../Pages/Dashboard/ApprovedChief/ApprovedChief";
 import UsersManagement from "../Pages/Dashboard/UsersManagment/UsersManagement";
 import AdminRoute from "./AdminRoute";
+import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -107,6 +108,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        Component: DashboardHome,
+      },
       {
         path: "myorder",
         Component: MyOrder,
