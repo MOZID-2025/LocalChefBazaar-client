@@ -19,6 +19,9 @@ const MyProfile = () => {
 
   if (isLoading) return <p>Loading...</p>;
 
+  const isAdmin = myProfile.role === "admin";
+  const isChief = myProfile.role === "chief";
+
   return (
     <div className="flex justify-center mt-10">
       <div className="card w-96 bg-base-100 shadow-xl">
@@ -61,20 +64,26 @@ const MyProfile = () => {
             </p>
           </div>
 
-          <div className="flex">
-            <Link className="">
-              <button className="btn btn-primary btn-sm text-black mr-4">
-                Edit Profile
-              </button>
-            </Link>
-            <Link to="/chief">
-              <button className="btn btn-primary mr-4 text-black btn-sm">
-                Be a chief
+          <div className="flex justify-center gap-2">
+            <Link>
+              <button
+                className="btn btn-primary btn-sm text-black"
+                disabled={isAdmin || isChief} // Disable if admin or chief
+              >
+                Be a Chief
               </button>
             </Link>
             <Link>
-              <button className="btn btn-primary text-black btn-sm">
+              <button
+                className="btn btn-primary btn-sm text-black"
+                disabled={isAdmin} // Disable if admin
+              >
                 Be an Admin
+              </button>
+            </Link>
+            <Link className="">
+              <button className="btn btn-primary btn-sm text-black">
+                Edit Profile
               </button>
             </Link>
           </div>
@@ -85,5 +94,3 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
-
-<td></td>;

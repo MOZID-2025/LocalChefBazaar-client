@@ -1,14 +1,18 @@
 import React from "react";
-import { FaBorderAll, FaUser } from "react-icons/fa";
-import { Link, NavLink, Outlet } from "react-router";
+import { FaBorderAll, FaFortAwesomeAlt, FaUser } from "react-icons/fa";
+import { Link, Outlet } from "react-router";
 import { CgProfile } from "react-icons/cg";
 import { MdReviews } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
-import { GiCook } from "react-icons/gi";
+import { GiCook, GiHotMeal, GiMeal } from "react-icons/gi";
 import useRoles from "../Hooks/useRoles";
+import { FcStatistics } from "react-icons/fc";
 
 const DashboardLayout = () => {
-  const { role } = useRoles();
+  const { userRole, isLoading } = useRoles();
+  if (isLoading) return <div>Loading</div>;
+  const role = userRole?.toLowerCase();
+
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -77,21 +81,6 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
-
-            {/* our dashboard links */}
-            <li>
-              <Link
-                to="/dashboard/myorder"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Order"
-              >
-                {/* Home icon */}
-                <FaBorderAll className="my-1.5 inline-block size-4" />
-
-                <span className="is-drawer-close:hidden">My Order</span>
-              </Link>
-            </li>
-
             {/* My profile*/}
             <li>
               <Link
@@ -106,64 +95,123 @@ const DashboardLayout = () => {
               </Link>
             </li>
 
-            {/* My Review*/}
-            <li>
-              <Link
-                to="/dashboard/my-review"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Review"
-              >
-                {/* profile icon */}
-                <MdReviews className="my-1.5 inline-block size-4" />
-
-                <span className="is-drawer-close:hidden">My Review</span>
-              </Link>
-            </li>
-
-            {/* Favourite Meal*/}
-            <li>
-              <Link
-                to="/dashboard/favourite-meal"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Favourite Meal"
-              >
-                {/* profile icon */}
-                <MdFavorite className="my-1.5 inline-block size-4" />
-
-                <span className="is-drawer-close:hidden">Favourite Meal</span>
-              </Link>
-            </li>
-
-            {role === "admin" && (
+            {role === "chief" && (
               <>
-                {/* approved chief*/}
+                {/* create meal*/}
                 <li>
                   <Link
-                    to="/dashboard/approve-chief"
+                    to="/dashboard/create-meal"
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="approve-chief"
+                    data-tip="Create Meal"
                   >
                     {/* profile icon */}
-                    <GiCook className="my-1.5 inline-block size-4" />
+                    <FaFortAwesomeAlt className="my-1.5 inline-block size-4" />
+
+                    <span className="is-drawer-close:hidden">Create Meal</span>
+                  </Link>
+                </li>
+                {/* My Meals*/}
+                <li>
+                  <Link
+                    to="/dashboard/my-meals"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Meals"
+                  >
+                    {/* profile icon */}
+                    <GiHotMeal className="my-1.5 inline-block size-4" />
+
+                    <span className="is-drawer-close:hidden">My Meals</span>
+                  </Link>
+                </li>
+                {/* Order requests*/}
+                <li>
+                  <Link
+                    to="/dashboard/order-request"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Order requests"
+                  >
+                    {/* profile icon */}
+                    <GiMeal className="my-1.5 inline-block size-4" />
 
                     <span className="is-drawer-close:hidden">
-                      approve chief
+                      Order requests
                     </span>
                   </Link>
                 </li>
+              </>
+            )}
 
-                {/* approved chief*/}
+            {role === "user" && (
+              <>
+                {/* our dashboard links */}
                 <li>
                   <Link
-                    to="/dashboard/users-management"
+                    to="/dashboard/myorder"
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Users Management"
+                    data-tip="My Order"
+                  >
+                    {/* Home icon */}
+                    <FaBorderAll className="my-1.5 inline-block size-4" />
+
+                    <span className="is-drawer-close:hidden">My Order</span>
+                  </Link>
+                </li>
+
+                {/* My Review*/}
+                <li>
+                  <Link
+                    to="/dashboard/my-review"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Review"
                   >
                     {/* profile icon */}
-                    <FaUser className="my-1.5 inline-block size-4"></FaUser>
+                    <MdReviews className="my-1.5 inline-block size-4" />
+
+                    <span className="is-drawer-close:hidden">My Review</span>
+                  </Link>
+                </li>
+                {/* Favourite Meal*/}
+                <li>
+                  <Link
+                    to="/dashboard/favourite-meal"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Favourite Meal"
+                  >
+                    {/* profile icon */}
+                    <MdFavorite className="my-1.5 inline-block size-4" />
 
                     <span className="is-drawer-close:hidden">
+                      Favourite Meal
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {role === "admin" && (
+              <>
+                <li>
+                  <Link to="/dashboard/manage-request">
+                    <GiCook className="my-1.5 inline-block size-4" />
+                    <span className="is-drawer-close:hidden">
+                      Mange request
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/users-management">
+                    <FaUser className="my-1.5 inline-block size-4" />
+                    <span className="is-drawer-close:hidden">
                       Users Management
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/platform-statistics">
+                    <FcStatistics className="my-1.5 inline-block size-4" />
+
+                    <span className="is-drawer-close:hidden">
+                      Platform Statistics
                     </span>
                   </Link>
                 </li>

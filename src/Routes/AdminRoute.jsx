@@ -2,16 +2,17 @@ import React from "react";
 import useAuth from "../Hooks/useAuth";
 import useRoles from "../Hooks/useRoles";
 
-const AdminRoute = ({ Children }) => {
+const AdminRoute = ({ children }) => {
   const { isLoading } = useAuth();
-  const { role, roleLoading } = useRoles();
+  const { userRole, isLoading: roleLoading } = useRoles();
 
   if (isLoading || roleLoading) return <p>Loading...</p>;
 
-  if (role !== "admin") {
-    return <div>access is forbidden</div>;
+  if (userRole?.toLowerCase() !== "admin") {
+    return <div>Access is forbidden</div>;
   }
-  return Children;
+
+  return <>{children}</>;
 };
 
 export default AdminRoute;

@@ -23,6 +23,9 @@ import ApprovedChief from "../Pages/Dashboard/ApprovedChief/ApprovedChief";
 import UsersManagement from "../Pages/Dashboard/UsersManagment/UsersManagement";
 import AdminRoute from "./AdminRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
+import CreateMeal from "../Pages/Dashboard/CreateMeal/CreateMeal";
+import OrderRequests from "../Pages/Dashboard/OrderRequests/OrderRequests";
+import PlatformStatistics from "../Pages/Dashboard/PlatformStatistics/PlatformStatistics";
 
 export const router = createBrowserRouter([
   {
@@ -110,7 +113,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: DashboardHome,
+        element: <DashboardHome />,
       },
       {
         path: "myorder",
@@ -145,7 +148,23 @@ export const router = createBrowserRouter([
         Component: FavoriteMeal,
       },
       {
-        path: "approve-chief",
+        path: "create-meal",
+        Component: CreateMeal,
+      },
+      {
+        path: "my-meals",
+        Component: CreateMeal,
+      },
+      {
+        path: "order-request",
+        Component: OrderRequests,
+      },
+      {
+        path: "platform-statistics",
+        Component: PlatformStatistics,
+      },
+      {
+        path: "manage-request",
         element: (
           <AdminRoute>
             <ApprovedChief></ApprovedChief>
