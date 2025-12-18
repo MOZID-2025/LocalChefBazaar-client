@@ -40,9 +40,21 @@ const UsersManagement = () => {
     });
   };
 
-  const handleRemoveAdmin = user =>{
-    
-  }
+  const handleRemoveAdmin = (user) => {
+    const roleInfo = { role: "user" };
+    axiosSecure.patch(`/users/${user._id}`, roleInfo).then((res) => {
+      if (res.data.modifiedCount) {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.displayName} remove from admin `,
+          showCancelButton: false,
+          timer: 2500,
+        });
+      }
+    });
+  };
   return (
     <div>
       <h2>Users Management: {users.length}</h2>
@@ -79,8 +91,10 @@ const UsersManagement = () => {
                 <td>{user.role || "user"}</td>
                 <td>
                   {user.role === "admin" ? (
-                    <button className="btn bg-red-300">
-                      {" "}
+                    <button
+                      onClick={() => handleRemoveAdmin(user)}
+                      className="btn bg-red-300"
+                    >
                       <FiShieldOff />
                     </button>
                   ) : (
